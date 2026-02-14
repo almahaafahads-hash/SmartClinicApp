@@ -1,10 +1,16 @@
+
 using SmartClinicApp.Interfaces;
+﻿using SmartClinicApp.Interfaces;
 using SmartClinicApp.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//<<<<<<< HEAD
+
+
+
 // الربط بين الانترفيس والتنفيذ (Dependency Injection)
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
