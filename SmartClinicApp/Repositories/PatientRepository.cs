@@ -9,6 +9,7 @@ namespace SmartClinicApp.Repositories
         public IEnumerable<Patient> GetAllPatients()
         {
             // نرجع قائمة وهمية حالياً حتى نربط الداتابيس
+
             return new List<Patient>
             {
                 new Patient { Id = 1, FullName = "ريما محمد", MedicalHistory = "متابعة دورية" },
