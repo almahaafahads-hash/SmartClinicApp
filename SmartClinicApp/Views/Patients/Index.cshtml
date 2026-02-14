@@ -1,0 +1,8 @@
+﻿@model IEnumerable<SmartClinicApp.Domain.Patients.Patient>
+<h1>قائمة المرضى</h1>
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.FullName</td></tr>
+    }
+</table>
