@@ -1,0 +1,26 @@
+﻿@model IEnumerable<SmartClinicApp.Domain.Doctor>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">قائمة الأطباء</h6>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>التخصص</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Specialization</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
