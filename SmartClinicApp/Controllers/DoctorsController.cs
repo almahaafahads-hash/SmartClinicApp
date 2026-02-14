@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SmartClinicApp.Domain.Doctors; // يربط الكنترولر بملف الدكتور
+using SmartClinicApp.Interfaces; // استدعاء الانترفيس
+using SmartClinicApp.Repositories;
 
 namespace SmartClinicApp.Controllers
 {
     public class DoctorsController : Controller
     {
+        private readonly IDoctorRepository _doctorRepo;
+
+        // Constructor: هنا نربط الكنترولر بالريبو
+        public DoctorsController(IDoctorRepository doctorRepo)
+        {
+            _doctorRepo = doctorRepo;
+        }
+
         public IActionResult Index()
         {
-            // قائمة وهمية للأطباء
-            var doctors = new List<Doctor>
-            {
-                new Doctor { Id = 1, Name = "د. خالد", Specialization = "باطنية" },
-                new Doctor { Id = 2, Name = "د. هند", Specialization = "أطفال" }
-            };
-
+            // الحين نجيب البيانات من الريبو مو يدوي
+            var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
         }
     }
