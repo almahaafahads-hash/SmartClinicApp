@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SmartClinicApp.Domain.Patients
+namespace SmartClinicApp.Domain
 {
     // هذا الكلاس يمثل بيانات المريض في النظام
     public class Patient

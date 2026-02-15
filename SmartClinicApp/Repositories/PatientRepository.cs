@@ -1,4 +1,4 @@
-﻿using SmartClinicApp.Domain.Patients;
+﻿using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
 
 namespace SmartClinicApp.Repositories
