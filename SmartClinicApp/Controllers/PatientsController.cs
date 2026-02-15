@@ -13,11 +13,18 @@ namespace SmartClinicApp.Controllers
             _patientRepo = patientRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(
+            )
+
         {
+
             // نطلب قائمة المرضى من الريبو
             var patients = _patientRepo.GetAllPatients();
             return View(patients);
+        }
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }
