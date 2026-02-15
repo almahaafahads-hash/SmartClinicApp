@@ -1,4 +1,4 @@
-﻿using SmartClinicApp.Domain.Patients; // نربطه بمودل المريض اللي سويتيه
+﻿using SmartClinicApp.Domain; // نربطه بمودل المريض اللي سويتيه
 
 namespace SmartClinicApp.Interfaces
 {
