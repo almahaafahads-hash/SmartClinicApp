@@ -20,5 +20,9 @@ namespace SmartClinicApp.Controllers
             var doctors = _doctorRepo.GetAllDoctors();
             return View(doctors);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
