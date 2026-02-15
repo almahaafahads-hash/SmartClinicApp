@@ -1,4 +1,4 @@
-﻿using SmartClinicApp.Domain.Doctors; // استدعاء مودل الدكتور
+﻿using SmartClinicApp.Domain; // استدعاء مودل الدكتور
 
 namespace SmartClinicApp.Interfaces
 {

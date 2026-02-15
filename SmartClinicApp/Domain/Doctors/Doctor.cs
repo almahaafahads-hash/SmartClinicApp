@@ -1,4 +1,4 @@
-﻿namespace SmartClinicApp.Domain.Doctors
+﻿namespace SmartClinicApp.Domain
 {
     public class Doctor
     {
