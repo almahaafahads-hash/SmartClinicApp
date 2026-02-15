@@ -16,5 +16,7 @@ namespace SmartClinicApp.Domain.Patients
 
         // السجل الطبي البسيط أو الملاحظات
         public string MedicalHistory { get; set; }
+        public string NationalId { get; set; }
+
     }
 }
