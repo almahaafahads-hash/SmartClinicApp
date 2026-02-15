@@ -1,8 +1,49 @@
-﻿@model IEnumerable<SmartClinicApp.Domain.Patients.Patient>
-<h1>قائمة المرضى</h1>
-<table class="table">
-    @foreach (var item in Model)
-    {
-        <tr><td>@item.FullName</td></tr>
-    }
-</table>
+﻿@* تعريف نوع البيانات اللي بنعرضها (قائمة من المرضى) *@
+@model IEnumerable<SmartClinicApp.Domain.Patients.Patient>
+
+@{
+    ViewData["Title"] = "قائمة المرضى";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">إدارة المرضى</h1>
+    <p class="mb-4">هذه الصفحة تعرض جميع المرضى المسجلين في العيادة.</p>
+
+    @* بداية القالب الخاص بالجدول *@
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">بيانات المرضى</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>الرقم</th>
+                            <th>الاسم الكامل</th>
+                            <th>رقم الهوية</th>
+                            @* هنا بنضيف أزرار التحكم مستقبلاً *@
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @* لوب (دوران) على قائمة المرضى لعرضهم سطر بسطر *@
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.FullName</td>
+                                <td>@item.NationalId</td>
+                                <td>
+                                    @* أزرار مؤقتة مثل مشروع طويق *@
+                                    <a class="btn btn-info btn-sm">تعديل</a>
+                                    <a class="btn btn-danger btn-sm">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
