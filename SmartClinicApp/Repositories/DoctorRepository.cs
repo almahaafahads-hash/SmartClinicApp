@@ -1,23 +1,30 @@
-﻿using SmartClinicApp.Domain;
+﻿using SmartClinicApp.Data;
+using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
 
 namespace SmartClinicApp.Repositories
 {
     public class DoctorRepository : IDoctorRepository
     {
-        // القائمة اللي تحفظ الأطباء
-        private static List<Doctor> _doctors = new List<Doctor>();
+        private readonly ApplicationDbContext _context;
 
-        public IEnumerable<Doctor> GetAllDoctors()
+        // نربط المستودع بقاعدة البيانات
+        public DoctorRepository(ApplicationDbContext context)
         {
-            return _doctors;
+            _context = context;
         }
 
+        // يجيب كل الأطباء من الـ SQL
+        public IEnumerable<Doctor> GetAllDoctors()
+        {
+            return _context.Doctors.ToList();
+        }
+
+        // يضيف طبيب جديد في الـ SQL
         public void AddDoctor(Doctor doctor)
         {
-            // إعطاء رقم تسلسلي للطبيب
-            doctor.Id = _doctors.Count > 0 ? _doctors.Max(d => d.Id) + 1 : 1;
-            _doctors.Add(doctor);
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
         }
     }
 }

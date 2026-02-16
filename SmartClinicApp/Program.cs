@@ -1,4 +1,6 @@
 
+using Microsoft.EntityFrameworkCore;
+using SmartClinicApp.Data;
 using SmartClinicApp.Interfaces;
 ﻿using SmartClinicApp.Interfaces;
 using SmartClinicApp.Repositories;
@@ -15,7 +17,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();// هذا اللي يشغل نظام المواعيد ف الموقع
-
+// إضافة سطر تعريف قاعدة البيانات
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
