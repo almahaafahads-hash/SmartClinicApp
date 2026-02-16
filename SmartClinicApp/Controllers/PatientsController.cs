@@ -1,30 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartClinicApp.Interfaces;
-using SmartClinicApp.Repositories;
+using SmartClinicApp.Domain;
 
 namespace SmartClinicApp.Controllers
 {
     public class PatientsController : Controller
     {
-        private readonly IPatientRepository _patientRepo;
+        private readonly IPatientRepository _repository;
 
-        public PatientsController(IPatientRepository patientRepo)
+        // الـ Constructor لتعريف المخزن
+        public PatientsController(IPatientRepository repository)
         {
-            _patientRepo = patientRepo;
+            _repository = repository;
         }
 
-        public IActionResult Index(
-            )
-
+        // عرض قائمة المرضى
+        public IActionResult Index()
         {
-
-            // نطلب قائمة المرضى من الريبو
-            var patients = _patientRepo.GetAllPatients();
+            var patients = _repository.GetAllPatients();
             return View(patients);
         }
+
+        // فتح صفحة الإضافة (الرسمة)
         public IActionResult Create()
         {
             return View();
+        }
+
+        // استقبال البيانات من الصفحة وحفظها
+        [HttpPost]
+        public IActionResult Create(Patient patient)
+        {
+            _repository.AddPatient(patient);
+            return RedirectToAction("Index");
         }
     }
 }
