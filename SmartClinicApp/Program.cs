@@ -4,7 +4,7 @@ using SmartClinicApp.Interfaces;
 using SmartClinicApp.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //<<<<<<< HEAD
