@@ -1,28 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SmartClinicApp.Interfaces; // استدعاء الانترفيس
+using SmartClinicApp.Domain;
+using SmartClinicApp.Interfaces;
 using SmartClinicApp.Repositories;
 
 namespace SmartClinicApp.Controllers
 {
     public class DoctorsController : Controller
     {
-        private readonly IDoctorRepository _doctorRepo;
+        // وحدنا الاسم هنا ليكون _repository عشان يسهل عليكِ
+        private readonly IDoctorRepository _repository;
 
-        // Constructor: هنا نربط الكنترولر بالريبو
-        public DoctorsController(IDoctorRepository doctorRepo)
+        public DoctorsController(IDoctorRepository repository)
         {
-            _doctorRepo = doctorRepo;
+            _repository = repository;
         }
 
         public IActionResult Index()
         {
-            // الحين نجيب البيانات من الريبو مو يدوي
-            var doctors = _doctorRepo.GetAllDoctors();
+            var doctors = _repository.GetAllDoctors();
             return View(doctors);
         }
+
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Doctor doctor)
+        {
+            // الحين الاسم صار مطابق للي عرفناه فوق
+            _repository.AddDoctor(doctor);
+            return RedirectToAction("Index");
         }
     }
 }
