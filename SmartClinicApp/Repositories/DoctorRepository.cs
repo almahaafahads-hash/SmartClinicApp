@@ -5,12 +5,8 @@ namespace SmartClinicApp.Repositories
 {
     public class DoctorRepository : IDoctorRepository
     {
-        // تعريف قائمة الأطباء (خارج الدالات عشان تكون ثابتة)
-        private static List<Doctor> _doctors = new List<Doctor>
-        {
-            new Doctor { Id = 1, Name = "د. خالد", Specialization = "باطنية" },
-            new Doctor { Id = 2, Name = "د. هند", Specialization = "أطفال" }
-        };
+        // القائمة اللي تحفظ الأطباء
+        private static List<Doctor> _doctors = new List<Doctor>();
 
         public IEnumerable<Doctor> GetAllDoctors()
         {
@@ -19,8 +15,8 @@ namespace SmartClinicApp.Repositories
 
         public void AddDoctor(Doctor doctor)
         {
-            // إعطاء رقم ID جديد تلقائي
-            doctor.Id = _doctors.Max(d => d.Id) + 1;
+            // إعطاء رقم تسلسلي للطبيب
+            doctor.Id = _doctors.Count > 0 ? _doctors.Max(d => d.Id) + 1 : 1;
             _doctors.Add(doctor);
         }
     }
