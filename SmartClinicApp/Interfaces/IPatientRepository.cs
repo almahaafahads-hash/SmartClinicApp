@@ -8,5 +8,7 @@ namespace SmartClinicApp.Interfaces
         void AddPatient(Patient patient);
         // تعريف الدالة اللي بتجيب كل المرضى (بدون كود تنفيذي)
         IEnumerable<Patient> GetAllPatients();
+  
     }
+
 }

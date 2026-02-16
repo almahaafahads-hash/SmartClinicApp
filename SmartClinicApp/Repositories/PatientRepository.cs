@@ -3,18 +3,29 @@ using SmartClinicApp.Interfaces;
 
 namespace SmartClinicApp.Repositories
 {
-    // هنا نقول إن هذا الكلاس ينفذ وعود الـ IPatientRepository
     public class PatientRepository : IPatientRepository
     {
+        // 1. تعريف القائمة (المخزن)
+        private static List<Patient> _patients = new List<Patient>
+        {
+            new Patient { Id = 1, FullName = "ريما محمد", MedicalHistory = "مستقر" },
+            new Patient { Id = 2, FullName = "سارة المنصور", MedicalHistory = "مراجعة" }
+        };
+
+        // 2. دالة عرض المرضى
         public IEnumerable<Patient> GetAllPatients()
         {
-            // نرجع قائمة وهمية حالياً حتى نربط الداتابيس
-
-            return new List<Patient>
-            {
-                new Patient { Id = 1, FullName = "ريما محمد", MedicalHistory = "متابعة دورية" },
-                new Patient { Id = 2, FullName = "سارة المنصور", MedicalHistory = "فحص عام" }
-            };
+            return _patients;
         }
-    }
-}
+
+        // 3. دالة إضافة مريض جديد
+        public void AddPatient(Patient patient)
+        {
+            // نعطي رقم جديد بناءً على آخر رقم موجود
+            patient.Id = _patients.Max(p => p.Id) + 1;
+
+            // نضيف المريض للقائمة
+            _patients.Add(patient);
+        }
+    } // هذا قوس قفلة الكلاس (الأساسي)
+} // هذا قوس قفلة النيم-سبيس (المجلد)
