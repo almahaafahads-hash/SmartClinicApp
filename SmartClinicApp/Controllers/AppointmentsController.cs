@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SmartClinicApp.Interfaces;
 using SmartClinicApp.Domain;
+using SmartClinicApp.Interfaces;
+using System;
 
 namespace SmartClinicApp.Controllers
 {
@@ -18,13 +19,24 @@ namespace SmartClinicApp.Controllers
             return View(_repository.GetAllAppointments());
         }
 
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Create(Appointment appointment)
         {
-            _repository.AddAppointment(appointment);
-            return RedirectToAction("Index");
+            try
+            {
+                _repository.AddAppointment(appointment);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(appointment);
+            }
         }
     }
 }
