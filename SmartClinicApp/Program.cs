@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();/
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));//تشغيل قاعددة في البرنامج
 
-// إضافة سطر تعريف قاعدة البيانات
+// إضافة سطر تعريف قاعدة البيانات//
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
