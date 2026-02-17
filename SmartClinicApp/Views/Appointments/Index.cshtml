@@ -1,23 +1,28 @@
 ﻿@model IEnumerable<SmartClinicApp.Domain.Appointment>
 
-<h2>قائمة المواعيد</h2>
-<a asp-action="Create" class="btn btn-primary">حجز موعد جديد</a>
+<h2>إدارة المواعيد</h2>
 
-<table class="table">
+<a asp-action="Create" class="btn btn-primary mb-3">إضافة موعد جديد</a>
+
+<table class="table table-bordered">
     <thead>
         <tr>
+            <th>رقم الموعد</th>
             <th>رقم المريض</th>
             <th>رقم الدكتور</th>
-            <th>التاريخ والوقت</th>
+            <th>تاريخ الموعد</th>
+            <th>ملاحظات</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.Id</td>
                 <td>@item.PatientId</td>
                 <td>@item.DoctorId</td>
                 <td>@item.AppointmentDate</td>
+                <td>@item.Notes</td>
             </tr>
         }
     </tbody>
