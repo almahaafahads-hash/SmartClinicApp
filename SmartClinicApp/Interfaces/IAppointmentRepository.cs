@@ -4,10 +4,13 @@ namespace SmartClinicApp.Interfaces
 {
     public interface IAppointmentRepository
     {
-        // أمر لجلب كل المواعيد
+        // جلب كل المواعيد
         IEnumerable<Appointment> GetAllAppointments();
 
-        // أمر لإضافة موعد جديد
+        // إضافة موعد جديد
         void AddAppointment(Appointment appointment);
+
+        // التحقق هل الوقت متاح للدكتور
+        bool IsDoctorAvailable(int doctorId, DateTime appointmentDate);
     }
 }

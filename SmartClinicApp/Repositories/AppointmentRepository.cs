@@ -1,5 +1,8 @@
 ﻿using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartClinicApp.Repositories
 {
@@ -7,21 +10,30 @@ namespace SmartClinicApp.Repositories
     {
         private static List<Appointment> _appointments = new List<Appointment>();
 
-        public IEnumerable<Appointment> GetAllAppointments() => _appointments;
+        public IEnumerable<Appointment> GetAllAppointments()
+        {
+            return _appointments;
+        }
+
+        public bool IsDoctorAvailable(int doctorId, DateTime appointmentDate)
+        {
+            return !_appointments.Any(a =>
+                a.DoctorId == doctorId &&
+                a.AppointmentDate == appointmentDate
+            );
+        }
 
         public void AddAppointment(Appointment appointment)
         {
-            // شرط ذكي: التأكد إن الدكتور ما عنده موعد بنفس الوقت
-            var isBusy = _appointments.Any(a =>
-                a.DoctorId == appointment.DoctorId &&
-                a.AppointmentDate == appointment.AppointmentDate);
-
-            if (isBusy)
+            if (!IsDoctorAvailable(appointment.DoctorId, appointment.AppointmentDate))
             {
                 throw new Exception("عفواً، الدكتور لديه موعد آخر في هذا الوقت!");
             }
 
-            appointment.Id = _appointments.Count > 0 ? _appointments.Max(a => a.Id) + 1 : 1;
+            appointment.Id = _appointments.Count > 0
+                ? _appointments.Max(a => a.Id) + 1
+                : 1;
+
             _appointments.Add(appointment);
         }
     }
