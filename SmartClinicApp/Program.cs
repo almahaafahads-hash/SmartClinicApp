@@ -17,8 +17,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();// هذا اللي يشغل نظام المواعيد ف الموقع
+<<<<<<< HEAD
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));//تشغيل قاعددة في البرنامج
+=======
+// إضافة سطر تعريف قاعدة البيانات
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+>>>>>>> 6b262b3b1cfd436016f7e5d397ddd939dab353d6
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

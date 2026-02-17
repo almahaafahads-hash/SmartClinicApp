@@ -1,31 +1,30 @@
-﻿using SmartClinicApp.Domain;
+﻿using SmartClinicApp.Data;
+using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
 
 namespace SmartClinicApp.Repositories
 {
     public class PatientRepository : IPatientRepository
     {
-        // 1. تعريف القائمة (المخزن)
-        private static List<Patient> _patients = new List<Patient>
-        {
-            new Patient { Id = 1, FullName = "ريما محمد", MedicalHistory = "مستقر" },
-            new Patient { Id = 2, FullName = "سارة المنصور", MedicalHistory = "مراجعة" }
-        };
+        private readonly ApplicationDbContext _context;
 
-        // 2. دالة عرض المرضى
+        // هنا نربط المستودع بقاعدة البيانات اللي سويتيها
+        public PatientRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        // يجيب كل المرضى من الـ SQL
         public IEnumerable<Patient> GetAllPatients()
         {
-            return _patients;
+            return _context.Patients.ToList();
         }
 
-        // 3. دالة إضافة مريض جديد
+        // يضيف مريض جديد في الـ SQL ويحفظه للأبد
         public void AddPatient(Patient patient)
         {
-            // نعطي رقم جديد بناءً على آخر رقم موجود
-            patient.Id = _patients.Max(p => p.Id) + 1;
-
-            // نضيف المريض للقائمة
-            _patients.Add(patient);
+            _context.Patients.Add(patient);
+            _context.SaveChanges();
         }
-    } // هذا قوس قفلة الكلاس (الأساسي)
-} // هذا قوس قفلة النيم-سبيس (المجلد)
+    }
+}
