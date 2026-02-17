@@ -15,24 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Dependency Injection (Repositories)
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
-
-
-builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();// هذا اللي يشغل نظام المواعيد ف الموقع
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));//تشغيل قاعددة في البرنامج
-
-// إضافة سطر تعريف قاعدة البيانات//
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-
-
-builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-
 
 var app = builder.Build();
 
