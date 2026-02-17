@@ -1,23 +1,26 @@
-﻿using SmartClinicApp.Domain;
+﻿using SmartClinicApp.Data;
+using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SmartClinicApp.Repositories
 {
     public class AppointmentRepository : IAppointmentRepository
     {
-        private static List<Appointment> _appointments = new List<Appointment>();
+        private readonly ApplicationDbContext _context;
+
+        public AppointmentRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public IEnumerable<Appointment> GetAllAppointments()
         {
-            return _appointments;
+            return _context.Appointments.ToList();
         }
 
         public bool IsDoctorAvailable(int doctorId, DateTime appointmentDate)
         {
-            return !_appointments.Any(a =>
+            return !_context.Appointments.Any(a =>
                 a.DoctorId == doctorId &&
                 a.AppointmentDate == appointmentDate
             );
@@ -26,15 +29,10 @@ namespace SmartClinicApp.Repositories
         public void AddAppointment(Appointment appointment)
         {
             if (!IsDoctorAvailable(appointment.DoctorId, appointment.AppointmentDate))
-            {
                 throw new Exception("عفواً، الدكتور لديه موعد آخر في هذا الوقت!");
-            }
 
-            appointment.Id = _appointments.Count > 0
-                ? _appointments.Max(a => a.Id) + 1
-                : 1;
-
-            _appointments.Add(appointment);
+            _context.Appointments.Add(appointment);
+            _context.SaveChanges();
         }
     }
 }
