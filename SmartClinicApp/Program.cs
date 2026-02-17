@@ -5,6 +5,8 @@ using SmartClinicApp.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// norah test
+
 // MVC
 builder.Services.AddControllersWithViews();
 
