@@ -3,9 +3,20 @@
     public class Appointment
     {
         public int Id { get; set; }
-        public int PatientId { get; set; } // رقم المريض المرتبط بالموعد
-        public int DoctorId { get; set; }  // رقم الدكتور المرتبط بالموعد
-        public DateTime AppointmentDate { get; set; } // تاريخ ووقت الموعد
-        public string Notes { get; set; } // ملاحظات (اختياري)
+
+        // رقم المريض
+        public int PatientId { get; set; }
+
+        // رقم الطبيب
+        public int DoctorId { get; set; }
+
+        // تاريخ ووقت الموعد
+        public DateTime AppointmentDate { get; set; }
+
+        // مدة الزيارة (30 دقيقة مثلاً)
+        public int DurationInMinutes { get; set; } = 30;
+
+        // ملاحظات
+        public string? Notes { get; set; }
     }
 }
