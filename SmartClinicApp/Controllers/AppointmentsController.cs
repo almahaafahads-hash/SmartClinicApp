@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
 using System;
-using System.Linq;
 
 namespace SmartClinicApp.Controllers
 {
@@ -32,14 +31,12 @@ namespace SmartClinicApp.Controllers
         }
 
         // GET: Appointments/Create
-        // هذه الدالة المسؤولة عن فتح صفحة الإضافة وتعبئة القوائم المنسدلة
+        // هذه الدالة تفتح صفحة الإضافة وتعبئة القوائم المنسدلة
         public IActionResult Create()
         {
-            // جلب قائمة المرضى وتحويلها لـ SelectList لعرض الأسماء
             var patients = _patientRepository.GetAllPatients();
             ViewBag.PatientId = new SelectList(patients, "Id", "FullName");
 
-            // جلب قائمة الأطباء وتحويلها لـ SelectList لعرض الأسماء
             var doctors = _doctorRepository.GetAllDoctors();
             ViewBag.DoctorId = new SelectList(doctors, "Id", "Name");
 
@@ -47,7 +44,6 @@ namespace SmartClinicApp.Controllers
         }
 
         // POST: Appointments/Create
-        // هذه الدالة المسؤولة عن حفظ الموعد بعد الضغط على الزر
         [HttpPost]
         public IActionResult Create(Appointment appointment)
         {
@@ -64,7 +60,7 @@ namespace SmartClinicApp.Controllers
                 ViewBag.Error = "حدث خطأ أثناء الحفظ: " + ex.Message;
             }
 
-            // في حال فشل الحفظ، نعيد تعبئة القوائم المنسدلة مرة أخرى قبل العودة للصفحة
+            // إذا فشل الحفظ نعيد تعبئة القوائم
             ViewBag.PatientId = new SelectList(_patientRepository.GetAllPatients(), "Id", "FullName", appointment.PatientId);
             ViewBag.DoctorId = new SelectList(_doctorRepository.GetAllDoctors(), "Id", "Name", appointment.DoctorId);
 

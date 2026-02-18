@@ -1,4 +1,5 @@
-﻿using SmartClinicApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartClinicApp.Data;
 using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
 
@@ -15,7 +16,10 @@ namespace SmartClinicApp.Repositories
 
         public IEnumerable<Appointment> GetAllAppointments()
         {
-            return _context.Appointments.ToList();
+            return _context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .ToList();
         }
 
         public bool IsDoctorAvailable(int doctorId, DateTime appointmentDate)

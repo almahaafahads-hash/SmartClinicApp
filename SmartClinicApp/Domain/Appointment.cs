@@ -5,14 +5,14 @@ namespace SmartClinicApp.Domain
 {
     public class Appointment
     {
-        // المفتاح الأساسي للموعد
+        // المفتاح الأساسي
         public int Id { get; set; }
 
-        // رقم المريض (Foreign Key)
+        // رقم المريض
         [Display(Name = "المريض")]
         public int PatientId { get; set; }
 
-        // رقم الطبيب (Foreign Key)
+        // رقم الطبيب
         [Display(Name = "الطبيب")]
         public int DoctorId { get; set; }
 
@@ -20,21 +20,16 @@ namespace SmartClinicApp.Domain
         [Display(Name = "تاريخ الموعد")]
         public DateTime AppointmentDate { get; set; }
 
-        // مدة الزيارة (افتراضياً 30 دقيقة)
+        // مدة الزيارة (30 دقيقة افتراضياً)
         [Display(Name = "مدة الزيارة")]
         public int DurationInMinutes { get; set; } = 30;
 
-        // ملاحظات إضافية عن الحالة
+        // ملاحظات
         [Display(Name = "ملاحظات")]
         public string? Notes { get; set; }
 
-        // --- الربط البرمجي (Navigation Properties) ---
-        // هذه الأسطر هي التي تعالج أخطاء CS1061 وتسمح لكِ بعرض الأسماء بدلاً من الأرقام
-
-        [Display(Name = "المريض")]
-        public virtual Patient Patient { get; set; }
-
-        [Display(Name = "الطبيب")]
-        public virtual Doctor Doctor { get; set; }
+        // Navigation Properties (عشان نجيب الاسم بدل الرقم)
+        public virtual Patient? Patient { get; set; }
+        public virtual Doctor? Doctor { get; set; }
     }
 }

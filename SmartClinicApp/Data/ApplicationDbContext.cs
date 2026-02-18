@@ -14,5 +14,8 @@ namespace SmartClinicApp.Data
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+
+        // جدول المستخدمين (Register / Login)
+        public DbSet<AppUser> AppUsers { get; set; }
     }
 }
