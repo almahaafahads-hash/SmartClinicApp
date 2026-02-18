@@ -1,9 +1,85 @@
-﻿<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">قائمة البيانات</h6>
+﻿@{
+    ViewData["Title"] = "الصفحة الرئيسية";
+}
+
+<div class="text-center mt-5 mb-5">
+    <div class="mb-4">
+        <img src="~/img/undraw_posting_photo.svg"
+             class="rocket-floating"
+             style="width: 280px; height: auto;"
+             alt="Smart Clinic Rocket" />
     </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-        </table>
+
+    <h1 class="display-4 font-weight-bold text-primary" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        مرحباً بك في العيادة الذكية
+    </h1>
+    <p class="lead text-muted">صحتكم أولوية.. نديرها بذكاء وسهولة</p>
+</div>
+
+<hr class="my-5" style="width: 40%; margin: auto; opacity: 0.1;">
+
+<div class="container" dir="rtl">
+    <div class="row text-center justify-content-center">
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0 hover-lift">
+                <div class="card-body py-5">
+                    <div class="icon-circle bg-primary text-white mb-4" style="width: 70px; height: 70px; line-height: 70px; border-radius: 50%; margin: 0 auto;">
+                        <i class="fas fa-user-md fa-2x"></i>
+                    </div>
+                    <h4 class="card-title font-weight-bold">الكادر الطبي</h4>
+                    <p class="card-text text-muted">إدارة بيانات الأطباء وتخصصاتهم بدقة</p>
+                    <a asp-controller="Doctors" asp-action="Index" class="btn btn-primary rounded-pill px-4 shadow-sm">دخول الأطباء</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0 hover-lift">
+                <div class="card-body py-5">
+                    <div class="icon-circle bg-success text-white mb-4" style="width: 70px; height: 70px; line-height: 70px; border-radius: 50%; margin: 0 auto;">
+                        <i class="fas fa-user-injured fa-2x"></i>
+                    </div>
+                    <h4 class="card-title font-weight-bold">سجلات المرضى</h4>
+                    <p class="card-text text-muted">متابعة ملفات المرضى وتاريخهم المرضي</p>
+                    <a asp-controller="Patients" asp-action="Index" class="btn btn-success rounded-pill px-4 shadow-sm">دخول المرضى</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0 hover-lift">
+                <div class="card-body py-5">
+                    <div class="icon-circle bg-info text-white mb-4" style="width: 70px; height: 70px; line-height: 70px; border-radius: 50%; margin: 0 auto;">
+                        <i class="fas fa-calendar-check fa-2x"></i>
+                    </div>
+                    <h4 class="card-title font-weight-bold">جدول المواعيد</h4>
+                    <p class="card-text text-muted">تنظيم المواعيد والربط بين الطبيب والمريض</p>
+                    <a asp-controller="Appointments" asp-action="Index" class="btn btn-info text-white rounded-pill px-4 shadow-sm">إدارة المواعيد</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+}
+
+<style>
+    /* تأثير الرفع للبطاقات */
+    .hover-lift {
+        transition: all 0.3s ease-in-out;
+    }
+
+        .hover-lift:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12) !important;
+        }
+    /* تحسين شكل الأزرار */
+    .btn {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+</style>

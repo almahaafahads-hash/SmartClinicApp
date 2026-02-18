@@ -1,44 +1,45 @@
-﻿@* تعريف نوع البيانات اللي بنعرضها (قائمة من المرضى) *@
-@model IEnumerable<SmartClinicApp.Domain.Patient>
-
-@{
-    ViewData["Title"] = "قائمة المرضى";
-}
+﻿@model IEnumerable<SmartClinicApp.Domain.Patient>
 
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">إدارة المرضى</h1>
-    <a asp-action="Create" class="btn btn-primary mb-3">إضافة مريض جديد</a>
-    <p class="mb-4">هذه الصفحة تعرض جميع المرضى المسجلين في العيادة.</p>
+    <div class="d-flex align-items-center mb-4">
+        <img src="~/img/undraw_profile_2.svg" style="width: 60px;" class="me-3" alt="Patient Icon" />
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">إدارة المرضى</h1>
+            <p class="text-muted mb-0">نظام العيادة الذكية - عرض وتعديل بيانات المرضى</p>
+        </div>
+    </div>
 
-    @* بداية القالب الخاص بالجدول *@
+    <a asp-action="Create" class="btn btn-primary mb-4 shadow-sm">
+        <i class="fas fa-user-plus"></i> إضافة مريض جديد
+    </a>
+
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">بيانات المرضى</h6>
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">بيانات المرضى المسجلين</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered table-hover" id="patientsTable" width="100%" cellspacing="0">
+                    <thead class="table-light text-center">
                         <tr>
                             <th>الرقم</th>
                             <th>الاسم الكامل</th>
                             <th>رقم الهوية</th>
-                            @* هنا بنضيف أزرار التحكم مستقبلاً *@
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @* لوب (دوران) على قائمة المرضى لعرضهم سطر بسطر *@
+                    <tbody class="text-center">
                         @foreach (var item in Model)
                         {
                             <tr>
                                 <td>@item.Id</td>
-                                <td>@item.FullName</td>
+                                <td class="font-weight-bold text-primary">@item.FullName</td>
                                 <td>@item.NationalId</td>
                                 <td>
-                                    @* أزرار مؤقتة مثل مشروع طويق *@
-                                    <a class="btn btn-info btn-sm">تعديل</a>
-                                    <a class="btn btn-danger btn-sm">حذف</a>
+                                    <div class="btn-group">
+                                        <a class="btn btn-info btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">تعديل</a>
+                                        <a class="btn btn-danger btn-sm" href="javascript:void(0);" onclick="confirmDelete(@item.Id)">حذف</a>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -48,3 +49,22 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/sb-admin-2.js"></script>
+    <script src="~/js/site.js"></script>
+
+    <script>
+        // دالة جافا سكريبت بسيطة للتأكد قبل الحذف
+        function confirmDelete(id) {
+            if (confirm("هل أنت متأكد من رغبتك في حذف هذا المريض؟")) {
+                window.location.href = '@Url.Action("Delete")/' + id;
+            }
+        }
+
+        //    اضيف حركة للجدول مستقبلاً
+        $(document).ready(function() {
+            console.log("نظام إدارة المرضى جاهز!");
+        });
+    </script>
+}
