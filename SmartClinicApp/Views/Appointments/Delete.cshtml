@@ -1,0 +1,32 @@
+﻿@model SmartClinicApp.Domain.Appointment
+
+<div class="container">
+    <h2 class="mb-4 text-danger">تأكيد حذف الموعد</h2>
+
+    <div class="alert alert-warning">
+        هل أنت متأكد أنك تريد حذف هذا الموعد؟
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">المريض</dt>
+        <dd class="col-sm-9">@Model.Patient?.FullName</dd>
+
+        <dt class="col-sm-3">الطبيب</dt>
+        <dd class="col-sm-9">@Model.Doctor?.Name</dd>
+
+        <dt class="col-sm-3">وقت الموعد</dt>
+        <dd class="col-sm-9">@Model.AppointmentDate</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <button type="submit" class="btn btn-danger">
+            حذف
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            إلغاء
+        </a>
+    </form>
+</div>

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
-using System;
 
 namespace SmartClinicApp.Controllers
 {
@@ -12,7 +11,6 @@ namespace SmartClinicApp.Controllers
         private readonly IPatientRepository _patientRepository;
         private readonly IDoctorRepository _doctorRepository;
 
-        // تهيئة الـ Controller وسحب جميع المستودعات المطلوبة
         public AppointmentsController(
             IAppointmentRepository appointmentRepository,
             IPatientRepository patientRepository,
@@ -23,48 +21,66 @@ namespace SmartClinicApp.Controllers
             _doctorRepository = doctorRepository;
         }
 
-        // عرض قائمة المواعيد
         public IActionResult Index()
         {
-            var appointments = _appointmentRepository.GetAllAppointments();
-            return View(appointments);
+            return View(_appointmentRepository.GetAllAppointments());
         }
 
-        // GET: Appointments/Create
-        // هذه الدالة تفتح صفحة الإضافة وتعبئة القوائم المنسدلة
         public IActionResult Create()
         {
-            var patients = _patientRepository.GetAllPatients();
-            ViewBag.PatientId = new SelectList(patients, "Id", "FullName");
-
-            var doctors = _doctorRepository.GetAllDoctors();
-            ViewBag.DoctorId = new SelectList(doctors, "Id", "Name");
-
+            FillLists();
             return View();
         }
 
-        // POST: Appointments/Create
         [HttpPost]
         public IActionResult Create(Appointment appointment)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    _appointmentRepository.AddAppointment(appointment);
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "حدث خطأ أثناء الحفظ: " + ex.Message;
+                _appointmentRepository.AddAppointment(appointment);
+                return RedirectToAction("Index");
             }
 
-            // إذا فشل الحفظ نعيد تعبئة القوائم
-            ViewBag.PatientId = new SelectList(_patientRepository.GetAllPatients(), "Id", "FullName", appointment.PatientId);
-            ViewBag.DoctorId = new SelectList(_doctorRepository.GetAllDoctors(), "Id", "Name", appointment.DoctorId);
-
+            FillLists();
             return View(appointment);
+        }
+
+        // ✅ EDIT
+        public IActionResult Edit(int id)
+        {
+            var appt = _appointmentRepository.GetAppointmentById(id);
+            FillLists();
+            return View(appt);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Appointment appointment)
+        {
+            _appointmentRepository.UpdateAppointment(appointment);
+            return RedirectToAction("Index");
+        }
+
+        // ✅ DELETE
+        public IActionResult Delete(int id)
+        {
+            var appt = _appointmentRepository.GetAppointmentById(id);
+            return View(appt);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _appointmentRepository.DeleteAppointment(id);
+            return RedirectToAction("Index");
+        }
+
+        private void FillLists()
+        {
+            ViewBag.PatientId =
+                new SelectList(_patientRepository.GetAllPatients(), "Id", "FullName");
+
+            ViewBag.DoctorId =
+                new SelectList(_doctorRepository.GetAllDoctors(), "Id", "Name");
         }
     }
 }

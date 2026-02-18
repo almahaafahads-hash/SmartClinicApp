@@ -22,21 +22,34 @@ namespace SmartClinicApp.Repositories
                 .ToList();
         }
 
-        public bool IsDoctorAvailable(int doctorId, DateTime appointmentDate)
+        public Appointment GetAppointmentById(int id)
         {
-            return !_context.Appointments.Any(a =>
-                a.DoctorId == doctorId &&
-                a.AppointmentDate == appointmentDate
-            );
+            return _context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .FirstOrDefault(a => a.Id == id);
         }
 
         public void AddAppointment(Appointment appointment)
         {
-            if (!IsDoctorAvailable(appointment.DoctorId, appointment.AppointmentDate))
-                throw new Exception("عفواً، الدكتور لديه موعد آخر في هذا الوقت!");
-
             _context.Appointments.Add(appointment);
             _context.SaveChanges();
+        }
+
+        public void UpdateAppointment(Appointment appointment)
+        {
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+        }
+
+        public void DeleteAppointment(int id)
+        {
+            var appt = _context.Appointments.Find(id);
+            if (appt != null)
+            {
+                _context.Appointments.Remove(appt);
+                _context.SaveChanges();
+            }
         }
     }
 }
