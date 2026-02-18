@@ -19,6 +19,7 @@ namespace SmartClinicApp.Repositories
             return _context.Appointments
                 .Include(a => a.Patient)
                 .Include(a => a.Doctor)
+                .OrderByDescending(a => a.AppointmentDate)
                 .ToList();
         }
 
@@ -32,6 +33,13 @@ namespace SmartClinicApp.Repositories
 
         public void AddAppointment(Appointment appointment)
         {
+            var isBusy = _context.Appointments.Any(a =>
+                a.DoctorId == appointment.DoctorId &&
+                a.AppointmentDate == appointment.AppointmentDate);
+
+            if (isBusy)
+                throw new Exception("عفواً، الدكتور لديه موعد آخر في هذا الوقت!");
+
             _context.Appointments.Add(appointment);
             _context.SaveChanges();
         }
@@ -44,12 +52,11 @@ namespace SmartClinicApp.Repositories
 
         public void DeleteAppointment(int id)
         {
-            var appt = _context.Appointments.Find(id);
-            if (appt != null)
-            {
-                _context.Appointments.Remove(appt);
-                _context.SaveChanges();
-            }
+            var appt = _context.Appointments.FirstOrDefault(a => a.Id == id);
+            if (appt == null) return;
+
+            _context.Appointments.Remove(appt);
+            _context.SaveChanges();
         }
     }
 }
