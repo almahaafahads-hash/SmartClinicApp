@@ -53,6 +53,19 @@ namespace SmartClinicApp.Data
                       .HasForeignKey(a => a.PatientId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // ================= AppUser (Login/Register) =================
+            modelBuilder.Entity<AppUser>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+
+                entity.Property(u => u.FullName).IsRequired();
+                entity.Property(u => u.Email).IsRequired();
+                entity.Property(u => u.Password).IsRequired();
+
+                // يمنع تكرار نفس الإيميل
+                entity.HasIndex(u => u.Email).IsUnique();
+            });
         }
     }
 }
