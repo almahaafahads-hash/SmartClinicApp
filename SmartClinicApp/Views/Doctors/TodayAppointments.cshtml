@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SmartClinicApp.Domain.Appointment>
+
+<div class="container mt-4">
+    <h3 class="mb-3">مواعيد اليوم للطبيب رقم: @ViewBag.DoctorId</h3>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>رقم الموعد</th>
+                        <th>المريض</th>
+                        <th>وقت الموعد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@(item.Patient != null ? item.Patient.FullName : item.PatientId.ToString())</td>
+                            <td>@item.AppointmentDate.ToString("yyyy/MM/dd - hh:mm tt")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <a asp-action="Index" class="btn btn-secondary">رجوع للأطباء</a>
+        </div>
+    </div>
+</div>

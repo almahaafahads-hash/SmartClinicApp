@@ -6,29 +6,26 @@ namespace SmartClinicApp.Controllers
 {
     public class DoctorsController : Controller
     {
-        // تعريف المستودع (Repository) للتعامل مع بيانات الأطباء
         private readonly IDoctorRepository _repository;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        // ربط المستودع من خلال الـ Constructor
-        public DoctorsController(IDoctorRepository repository)
+        public DoctorsController(IDoctorRepository repository, IAppointmentRepository appointmentRepository)
         {
             _repository = repository;
+            _appointmentRepository = appointmentRepository;
         }
 
-        // ✅ عرض صفحة جدول الأطباء
         public IActionResult Index()
         {
             var doctors = _repository.GetAllDoctors();
             return View(doctors);
         }
 
-        // ✅ فتح صفحة إضافة طبيب جديد
         public IActionResult Create()
         {
             return View();
         }
 
-        // ✅ حفظ الطبيب الجديد
         [HttpPost]
         public IActionResult Create(Doctor doctor)
         {
@@ -36,9 +33,7 @@ namespace SmartClinicApp.Controllers
             return RedirectToAction("Index");
         }
 
-        // ===================== EDIT =====================
-
-        // ✅ EDIT (GET) - يفتح صفحة التعديل
+        // ✅ EDIT (GET)
         public IActionResult Edit(int id)
         {
             var doctor = _repository.GetDoctorById(id);
@@ -47,7 +42,7 @@ namespace SmartClinicApp.Controllers
             return View(doctor);
         }
 
-        // ✅ EDIT (POST) - يحفظ التعديل
+        // ✅ EDIT (POST)
         [HttpPost]
         public IActionResult Edit(Doctor doctor)
         {
@@ -55,9 +50,7 @@ namespace SmartClinicApp.Controllers
             return RedirectToAction("Index");
         }
 
-        // ===================== DELETE =====================
-
-        // ✅ DELETE (GET) - يفتح صفحة تأكيد الحذف
+        // ✅ DELETE (GET)
         public IActionResult Delete(int id)
         {
             var doctor = _repository.GetDoctorById(id);
@@ -66,12 +59,26 @@ namespace SmartClinicApp.Controllers
             return View(doctor);
         }
 
-        // ✅ DELETE (POST) - ينفذ الحذف النهائي
+        // ✅ DELETE (POST)
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
             _repository.DeleteDoctor(id);
             return RedirectToAction("Index");
+        }
+
+        // ✅ مواعيد اليوم لطبيب معيّن
+        public IActionResult TodayAppointments(int id)
+        {
+            var today = DateTime.Today;
+
+            var appts = _appointmentRepository
+                .GetAllAppointments()
+                .Where(a => a.DoctorId == id && a.AppointmentDate.Date == today)
+                .ToList();
+
+            ViewBag.DoctorId = id;
+            return View(appts);
         }
     }
 }

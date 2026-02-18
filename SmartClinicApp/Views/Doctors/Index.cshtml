@@ -4,31 +4,35 @@
 
     <!-- العنوان -->
     <div class="d-flex align-items-center mb-4">
-        <img src="~/img/undraw_posting_photo.svg" style="width: 60px;" class="me-3" />
+        <img src="~/img/undraw_profile.svg" style="width: 60px;" class="me-3" />
         <div>
             <h1 class="h3 mb-0 text-gray-800">إدارة الأطباء</h1>
-            <p class="text-muted mb-0">عرض وإضافة وتعديل وحذف الأطباء</p>
+            <p class="text-muted mb-0">عرض وإدارة بيانات الأطباء في نظام العيادة</p>
         </div>
     </div>
 
-    <!-- زر إضافة -->
-    <a asp-action="Create" class="btn btn-info text-white mb-4">
+    <!-- زر إضافة طبيب -->
+    <a asp-action="Create" class="btn btn-success mb-4">
         ➕ إضافة طبيب جديد
     </a>
 
-    <!-- الجدول -->
+    <!-- جدول الأطباء -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-info text-white">
+
+        <div class="card-header py-3 bg-success text-white">
             <h6 class="m-0 font-weight-bold">قائمة الأطباء</h6>
         </div>
 
         <div class="card-body">
+
             <div class="table-responsive">
+
                 <table class="table table-bordered table-hover text-center">
+
                     <thead class="table-light">
                         <tr>
                             <th>الرقم</th>
-                            <th>الاسم</th>
+                            <th>اسم الطبيب</th>
                             <th>التخصص</th>
                             <th>الإجراءات</th>
                         </tr>
@@ -39,28 +43,49 @@
                         {
                             <tr>
                                 <td>@item.Id</td>
-                                <td class="fw-bold text-primary">@item.Name</td>
-                                <td>@item.Specialization</td>
+
+                                <td class="fw-bold text-primary">
+                                    @item.Name
+                                </td>
+
                                 <td>
+                                    @item.Specialization
+                                </td>
+
+                                <td>
+
+                                    <!-- تعديل -->
                                     <a asp-action="Edit"
                                        asp-route-id="@item.Id"
                                        class="btn btn-info btn-sm text-white">
                                         ✏️ تعديل
                                     </a>
 
+                                    <!-- حذف -->
                                     <a asp-action="Delete"
                                        asp-route-id="@item.Id"
                                        class="btn btn-danger btn-sm">
                                         🗑️ حذف
                                     </a>
+
+                                    <!-- مواعيد اليوم -->
+                                    <a asp-action="TodayAppointments"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm">
+                                        📅 مواعيد اليوم
+                                    </a>
+
                                 </td>
                             </tr>
                         }
                     </tbody>
 
                 </table>
+
             </div>
+
         </div>
+
     </div>
 
 </div>
