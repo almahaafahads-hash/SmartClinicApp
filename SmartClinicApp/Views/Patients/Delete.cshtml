@@ -1,0 +1,25 @@
+﻿@model SmartClinicApp.Domain.Patient
+
+<div class="container mt-4">
+    <h3 class="mb-3 text-danger">تأكيد الحذف</h3>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p>هل أنت متأكد أنك تريد حذف هذا المريض؟</p>
+
+            <ul>
+                <li><strong>الاسم:</strong> @Model.FullName</li>
+                <li><strong>رقم الهوية:</strong> @Model.NationalId</li>
+            </ul>
+
+            @* ✅ هذا أهم شيء: الفورم يرسل POST إلى Delete وليس DeleteConfirmed *@
+            <form asp-action="Delete" method="post">
+                @* نرسل id عشان الكنترولر يعرف مين يحذف *@
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <button type="submit" class="btn btn-danger">حذف نهائي</button>
+                <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+            </form>
+        </div>
+    </div>
+</div>

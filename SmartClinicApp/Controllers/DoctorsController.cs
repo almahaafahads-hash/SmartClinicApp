@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartClinicApp.Domain;
 using SmartClinicApp.Interfaces;
-using SmartClinicApp.Repositories;
 
 namespace SmartClinicApp.Controllers
 {
@@ -16,27 +15,62 @@ namespace SmartClinicApp.Controllers
             _repository = repository;
         }
 
-        // عرض صفحة جدول الأطباء
+        // ✅ عرض صفحة جدول الأطباء
         public IActionResult Index()
         {
             var doctors = _repository.GetAllDoctors();
             return View(doctors);
         }
 
-        // فتح صفحة نموذج إضافة طبيب جديد
+        // ✅ فتح صفحة إضافة طبيب جديد
         public IActionResult Create()
         {
             return View();
         }
 
-        // استقبال بيانات الطبيب الجديد وحفظها
+        // ✅ حفظ الطبيب الجديد
         [HttpPost]
         public IActionResult Create(Doctor doctor)
         {
-            // حفظ البيانات في القائمة عبر المستودع
             _repository.AddDoctor(doctor);
+            return RedirectToAction("Index");
+        }
 
-            // إعادة التوجيه لجدول الأطباء بعد الحفظ بنجاح
+        // ===================== EDIT =====================
+
+        // ✅ EDIT (GET) - يفتح صفحة التعديل
+        public IActionResult Edit(int id)
+        {
+            var doctor = _repository.GetDoctorById(id);
+            if (doctor == null) return NotFound();
+
+            return View(doctor);
+        }
+
+        // ✅ EDIT (POST) - يحفظ التعديل
+        [HttpPost]
+        public IActionResult Edit(Doctor doctor)
+        {
+            _repository.UpdateDoctor(doctor);
+            return RedirectToAction("Index");
+        }
+
+        // ===================== DELETE =====================
+
+        // ✅ DELETE (GET) - يفتح صفحة تأكيد الحذف
+        public IActionResult Delete(int id)
+        {
+            var doctor = _repository.GetDoctorById(id);
+            if (doctor == null) return NotFound();
+
+            return View(doctor);
+        }
+
+        // ✅ DELETE (POST) - ينفذ الحذف النهائي
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _repository.DeleteDoctor(id);
             return RedirectToAction("Index");
         }
     }

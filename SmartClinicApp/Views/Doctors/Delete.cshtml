@@ -1,0 +1,23 @@
+﻿@model SmartClinicApp.Domain.Doctor
+
+<div class="container mt-4">
+    <h3 class="mb-3 text-danger">تأكيد حذف الطبيب</h3>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p>هل أنت متأكد أنك تريد حذف هذا الطبيب؟</p>
+
+            <ul>
+                <li><strong>الاسم:</strong> @Model.Name</li>
+                <li><strong>التخصص:</strong> @Model.Specialization</li>
+            </ul>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <button type="submit" class="btn btn-danger">حذف نهائي</button>
+                <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+            </form>
+        </div>
+    </div>
+</div>

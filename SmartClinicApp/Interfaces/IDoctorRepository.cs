@@ -4,8 +4,19 @@ namespace SmartClinicApp.Interfaces
 {
     public interface IDoctorRepository
     {
+        // عرض كل الأطباء
         IEnumerable<Doctor> GetAllDoctors();
-        // هذا السطر اللي يخلي الكنترولر يشوف دالة الإضافة
+
+        // إضافة طبيب جديد
         void AddDoctor(Doctor doctor);
+
+        // ✅ جلب طبيب بالـ ID (للتعديل/الحذف)
+        Doctor GetDoctorById(int id);
+
+        // ✅ تعديل بيانات طبيب
+        void UpdateDoctor(Doctor doctor);
+
+        // ✅ حذف طبيب
+        void DeleteDoctor(int id);
     }
 }

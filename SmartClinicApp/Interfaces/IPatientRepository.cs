@@ -1,14 +1,15 @@
-﻿using SmartClinicApp.Domain; // نربطه بمودل المريض اللي سويتيه
+﻿using System.Collections.Generic;
+using SmartClinicApp.Domain;
 
 namespace SmartClinicApp.Interfaces
 {
     public interface IPatientRepository
     {
-        // تعريف أمر إضافة مريض جديد في النظام
-        void AddPatient(Patient patient);
-        // تعريف الدالة اللي بتجيب كل المرضى (بدون كود تنفيذي)
-        IEnumerable<Patient> GetAllPatients();
-  
-    }
+        List<Patient> GetAllPatients();
+        Patient? GetPatientById(int id);
 
+        void AddPatient(Patient patient);
+        void UpdatePatient(Patient patient);
+        void DeletePatient(int id);
+    }
 }

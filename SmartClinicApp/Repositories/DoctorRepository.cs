@@ -26,5 +26,28 @@ namespace SmartClinicApp.Repositories
             _context.Doctors.Add(doctor);
             _context.SaveChanges();
         }
+
+        // ✅ يجيب طبيب واحد حسب الـ ID
+        public Doctor GetDoctorById(int id)
+        {
+            return _context.Doctors.FirstOrDefault(d => d.Id == id);
+        }
+
+        // ✅ تعديل طبيب
+        public void UpdateDoctor(Doctor doctor)
+        {
+            _context.Doctors.Update(doctor);
+            _context.SaveChanges();
+        }
+
+        // ✅ حذف طبيب
+        public void DeleteDoctor(int id)
+        {
+            var doctor = GetDoctorById(id);
+            if (doctor == null) return;
+
+            _context.Doctors.Remove(doctor);
+            _context.SaveChanges();
+        }
     }
 }
